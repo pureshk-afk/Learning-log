@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*dgl@p9_s2p@5lfrl@*ad=5qvcjslw4jut-bcs)w$)dohp-&bv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(getenv("DEBUG", "1")))
 
 ALLOWED_HOSTS = [
     getenv("LL_HOST", "localhost")
@@ -127,3 +127,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/users/login/'
+
+# CSRF settings
+
+CSRF_TRUSTED_ORIGINS = [
+    f"{'http' if DEBUG else 'https'}://{getenv("LL_HOST", "localhost")}"
+]
